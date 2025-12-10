@@ -1,36 +1,47 @@
-import React, { useState } from "react";
-import { X, Menu } from "lucide-react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
+import { Menu, X } from "lucide-react";
+import { dummyUserData } from "../assets/assets";
+import { useState } from "react";
+import Loading from "../components/Loading";
 import Sidebar from "../components/Sidebar";
 
 const Layout = () => {
-  // حالة فتح/إغلاق السايدبار
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const user = dummyUserData;
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const location = useLocation();
+
+  // المسارات اللي ما بدنا نعرض فيها السايد بار
+  const hideSidebar = location.pathname === "/login"; // أو "/sign-in" حسب مسارك
+
+  if (!user) return <Loading />;
 
   return (
-    <div className="min-h-screen bg-[#222222] text-white relative">
-      {/* زر فتح/إغلاق السايدبار (يظهر فقط على الموبايل) */}
-      {sidebarOpen ? (
-        <X
-          className="absolute top-3 left-3 z-50 bg-amber-400 rounded-md shadow
-                     w-10 h-10 text-gray-100 sm:hidden cursor-pointer p-2"
-          onClick={() => setSidebarOpen(false)}
-        />
-      ) : (
-        <Menu
-          className="absolute top-3 left-3 z-50 bg-[#FFD700] rounded-md shadow
-                     w-10 h-10 text-gray-100 sm:hidden cursor-pointer p-2"
-          onClick={() => setSidebarOpen(true)}
-        />
+    <div className="w-full flex h-screen">
+      {/* السايد بار يظهر فقط إذا ما كنا بصفحة اللوج إن */}
+      {!hideSidebar && (
+        <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
       )}
 
-      {/* السايدبار */}
-      <Sidebar sidebarOpen={sidebarOpen} />
+      <div className="flex-1 relative">
+        {/* زرار الـ Menu / X للموبايل - برضه بس لما السايد بار مفعل */}
+        {!hideSidebar && (
+          <>
+            {sidebarOpen ? (
+              <X
+                className="absolute top-2 right-8 p-2 z-100 bg-blue-600 rounded-md shadow w-10 h-10 text-gray-50 sm:hidden"
+                onClick={() => setSidebarOpen(false)}
+              />
+            ) : (
+              <Menu
+                className=" absolute top-2 right-8 p-2 z-100 bg-blue-600 rounded-md shadow-2xl w-10 h-10 text-gray-50 sm:hidden"
+                onClick={() => setSidebarOpen(true)}
+              />
+            )}
+          </>
+        )}
 
-      {/* مكان عرض الصفحات (Feed, Profile, Messages, ... إلخ) */}
-      <main className="ml-20 p-4">
         <Outlet />
-      </main>
+      </div>
     </div>
   );
 };

@@ -1,80 +1,44 @@
-import React from "react";
-import {
-  Home,
-  Search,
-  MessageCircle,
-  User,
-  Settings,
-  Users,
-} from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { assets, dummyUserData } from "../assets/assets";
+import { CirclePlus, LogOut } from "lucide-react";
+import { UserButton, useClerk } from "@clerk/clerk-react";
+import MenuItems from "./MenuItems";
 
-const Sidebar = ({ sidebarOpen }) => {
+const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
+  const navigate = useNavigate();
+  const user = dummyUserData;
+  const { signOut } = useClerk();
+
   return (
-    <div
-      className={`
-        fixed left-3 top-1/2 -translate-y-1/2 z-40
-        bg-gradient-to-br from-[#6e6363] via-[#444444] to-[#6e6363]
-        backdrop-blur-xl shadow-[0_0_30px_rgba(255,215,0,0.6)]
-        border border-yellow-500
-        flex flex-col items-center justify-start
-        overflow-hidden
-        transition-all duration-300 ease-in-out
-        ${sidebarOpen ? "w-56 h-[80vh] rounded-3xl" : "w-14 h-14 rounded-full"}
-      `}
-    >
-      {/* المحتوى يظهر فقط عندما يكون السايدبار مفتوح */}
-      {sidebarOpen && (
-        <div className="mt-6 flex flex-col items-center space-y-10">
-          <Link
-            to="/"
-            className="p-1 rounded-full transition-all hover:scale-110"
-          >
-            <Home size={26} className="text-indigo-50 hover:text-yellow-400" />
-          </Link>
+    <div className={`w-60 xl:w-72 bg-white border-r border-gray-200 flex flex-col justify-between items-center max-sm:absolute top-0 bottom-0 z-20 ${sidebarOpen ? "translate-x-0" : "max-sm:-translate-x-full"} transition-all duration-300 ease-in-out`}>
+      <div className="w-full">
+        <img
+          src={assets.logo}
+          className="w-26 ml-7 my-2 cursor-pointer"
+          alt=""
+          onClick={() => navigate("/")}
+        />
 
-          <Link
-            to="/search"
-            className="p-1 rounded-full transition-all hover:scale-110"
-          >
-            <Search size={26} className="text-indigo-50 hover:text-yellow-400" />
-          </Link>
+        <hr className="border-gray-300 mb-8" />
+        
+        <MenuItems setSidebarOpen ={setSidebarOpen}/>
+        <Link to="/create-post" className="flex items-center justify-center gap-2 py-2.5 mt-6 mx-6 rounded-lg bg-linear-to-r from-indigo-500 to-purple-600 hover:from-indigo-700 hover:to-purple-800 active:scale-95 transition text-white cursor-pointer">
+          <CirclePlus className="w-5 h-5" />
+          Create Post
+        </Link>
+      </div>
 
-          <Link
-            to="/messages"
-            className="p-1 rounded-full transition-all hover:scale-110"
-          >
-            <MessageCircle
-              size={26}
-              className="text-indigo-50 hover:text-yellow-400"
-            />
-          </Link>
-
-          <Link
-            to="/profile"
-            className="p-1 rounded-full transition-all hover:scale-110"
-          >
-            <User size={26} className="text-indigo-50 hover:text-yellow-400" />
-          </Link>
-
-          <Link
-            to="/settings"
-            className="p-1 rounded-full transition-all hover:scale-110"
-          >
-            <Settings
-              size={26}
-              className="text-indigo-50 hover:text-yellow-400"
-            />
-          </Link>
-
-          <Link
-            to="/connections"
-            className="p-1 rounded-full transition-all hover:scale-110"
-          >
-            <Users size={26} className="text-indigo-50 hover:text-yellow-400" />
-          </Link>
+      <div className="w-full border-t border-gray-200 p-4 px-7 flex items-center justify-between">
+        <UserButton/>
+        <div>
+          <h1 className="text-sm font-medium">{user.full_name}</h1>
+          <p className="text-xs text-gray-500">@{user.username}</p>
         </div>
-      )}
+        <LogOut
+         onClick={signOut}
+         className="w-4.5 text-gray-400 hover:text-gray-700 transition cursor-pointer"
+/>
+      </div>
     </div>
   );
 };

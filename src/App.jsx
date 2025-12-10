@@ -1,5 +1,4 @@
 import { Route, Routes } from 'react-router-dom'
-import Messages from './pages/Messages'
 import Layout from './pages/Layout'
 import Feed from './pages/Feed'
 import Chat from './pages/Chat'
@@ -11,18 +10,19 @@ import Settings from './pages/Settings'
 import PostDetailes from './pages/PostDetailes'
 import NotificationsPage from './pages/NotificationsPage'
 import Login from './pages/Login'
+import RecentMessages from './components/RecentMessages'
+import Messages from './pages/Messages'
+import Discover from './pages/Discover'
 import { useUser } from '@clerk/clerk-react'
 
 const App = () => {
-  {/*const {user}=useUser()*/}
+  const {user}=useUser()
   return (
     
     <>
     <Routes>
-      {/*<Route path = "/" element = {!user ? <Login/>: <Layout/>}>*/}
-      <Route path = "/" element = { <Layout/>}>
+      <Route path = "/" element = {!user ? <Login/>: <Layout/>}>
           <Route index element = {<Feed/>}/>
-          <Route path='messages' element ={<Messages/>} />
           <Route path='messages/:userId' element ={<Chat/>} />
           <Route path='connections' element ={<Connections/>} />
           <Route path='search' element ={<Search/>} />
@@ -33,6 +33,11 @@ const App = () => {
           <Route path='post/:postId' element ={<PostDetailes/>} />
           <Route path='notifications' element ={<NotificationsPage/>} />
           <Route path="/login" element={<Login />} />
+          <Route path="/recentmessages" element={<RecentMessages />} />
+          <Route path="/messages" element={<Messages />} />
+          <Route path="/discover" element={<Discover />} />
+          
+          
 
 
           
