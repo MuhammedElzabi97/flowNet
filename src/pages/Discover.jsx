@@ -40,7 +40,6 @@ const Discover = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
       <div className="max-w-6xl mx-auto p-6">
-        {/* العنوان والوصف */}
         <div>
           <h1 className="text-3xl font-bold text-slate-900 mb-2">
             Discover People
@@ -50,7 +49,6 @@ const Discover = () => {
           </p>
         </div>
 
-        {/* صندوق البحث */}
         <div className="mb-8 shadow-md rounded-md border border-slate-200/60 bg-white">
           <div className="p-6">
             <div className="relative">
@@ -69,13 +67,11 @@ const Discover = () => {
           </div>
         </div>
 
-        {/* قائمة المستخدمين */}
         <div className="flex flex-wrap gap-6">
           {users.map((user) => (
             <UserCard user={user} key={user._id} />
           ))}
 
-          {/* لو ما في نتائج */}
           {!loading && users.length === 0 && (
             <p className="text-slate-500 text-sm">
               No users found. Try a different keyword.
@@ -83,7 +79,6 @@ const Discover = () => {
           )}
         </div>
 
-        {/* شاشة التحميل */}
         {loading && <Loading height="60vh" />}
       </div>
     </div>

@@ -24,7 +24,6 @@ const Feed = () => {
 
   return (
     <div className="h-full overflow-y-scroll py-10 xl:pr-5 flex items-start justify-center xl:gap-8">
-      {/* يسار: الستوري + البوستات */}
       <div className="flex-1 max-w-2xl">
         <StoriesBar />
           <div className="p-4 space-y-6">

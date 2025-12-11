@@ -11,7 +11,6 @@ const StoriesBar = () => {
   const [viewStory, setViewStory] = useState(null);
 
   const fetchStories = async () => {
-    // هون لاحقاً رح تجيب من API
     setStories(dummyStoriesData);
   };
 
@@ -19,7 +18,6 @@ const StoriesBar = () => {
     fetchStories();
   }, []);
 
-  // دالة لإضافة ستوري جديدة من المودال
   const handleAddStory = (newStory) => {
     setStories((prev) => [newStory, ...prev]);
   };
@@ -27,7 +25,6 @@ const StoriesBar = () => {
   return (
     <div className="w-screen sm:w-[calc(100vw-240px)] lg:max-w-2xl overflow-x-auto px-4">
       <div className="flex gap-4 pb-5">
-        {/* بطاقة إنشاء ستوري جديدة */}
         <div
           onClick={() => setShowModal(true)}
           className="rounded-lg shadow-sm min-w-30 max-w-30 max-h-40 aspect-3/4 cursor-pointer hover:shadow-lg transition-all duration-200 border-2 border-dashed border-indigo-300 bg-gradient-to-b from-indigo-50 to-white flex items-center justify-center"
@@ -43,31 +40,26 @@ const StoriesBar = () => {
           </div>
         </div>
 
-        {/* بطاقات الستوري الحقيقية */}
         {stories.map((story, index) => (
           <div
             onClick={() => setViewStory(story)}
             key={index}
             className="relative rounded-lg shadow min-w-30 max-w-30 max-h-40 aspect-3/4 cursor-pointer hover:shadow-lg transition-all duration-200 bg-gradient-to-b from-indigo-500 to-purple-600 hover:from-indigo-700 hover:to-purple-800 active:scale-95 overflow-hidden"
           >
-            {/* صورة البروفايل */}
             <img
               src={story.user.profile_picture}
               alt=""
               className="absolute w-8 h-8 top-3 left-3 z-10 rounded-full ring ring-gray-100 shadow"
             />
 
-            {/* النص */}
             <p className="absolute top-16 left-3 text-white/80 text-sm truncate max-w-24">
               {story.content}
             </p>
 
-            {/* الوقت */}
             <p className="text-white absolute bottom-2 right-2 z-10 text-xs">
               {moment(story.createdAt).fromNow()}
             </p>
 
-            {/* الميديا */}
             {story.media_type !== "text" && (
               <div className="absolute inset-0 z-0 rounded-lg bg-black overflow-hidden">
                 {story.media_type === "image" ? (
@@ -90,7 +82,6 @@ const StoriesBar = () => {
         ))}
       </div>
 
-      {/* المودال */}
       {showModal && (
         <StoryModal
           setShowModal={setShowModal}
@@ -99,7 +90,6 @@ const StoriesBar = () => {
         />
       )}
 
-      {/* عارض الستوري */}
       {viewStory && (
         <StoryViewer viewStory={viewStory} setViewStory={setViewStory} />
       )}

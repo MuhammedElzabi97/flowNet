@@ -1,11 +1,127 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from "react";
+import { dummyMessagesData, dummyUserData } from "../assets/assets";
+import { Image as ImageIcon, SendHorizontal } from "lucide-react";
 
 const Chat = () => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
+  const [text, setText] = useState("");
+  const [image, setImage] = useState(null);
+  const [user, setUser] = useState(dummyUserData);
+  const messages = dummyMessagesData;
 
-export default Chat
+  const messagesEndRef = useRef(null);
+
+  const sendMessage = async () => {
+    // TODO: mesaj gönderme işlemi
+    console.log("Sending:", { text, image });
+    setText("");
+    setImage(null);
+  };
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  return (
+    <div className="flex flex-col h-screen">
+      {/* Header */}
+      <div className="flex items-center gap-2 p-2 md:px-10 xl:pl-42 bg-gradient-to-r from-indigo-50 to-purple-50 border-b border-gray-300">
+        <img
+          src={user.profile_picture}
+          alt={user.full_name}
+          className="size-8 rounded-full"
+        />
+        <div>
+          <p className="font-medium">{user.full_name}</p>
+          <p className="text-sm text-gray-500 -m-1.5">@{user.username}</p>
+        </div>
+      </div>
+
+      {/* Messages */}
+      <div className="p-5 md:px-10 h-full overflow-y-scroll">
+        <div className="space-y-4 max-w-full mx-auto">
+          {[...messages]
+            .sort(
+              (a, b) =>
+                new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+            )
+            .map((message, index) => (
+              <div
+                key={index}
+                className={`flex flex-col ${
+                  message.to_user_id !== user._id ? "items-start" : "items-end"
+                }`}
+              >
+                <div
+                  className={`p-2 text-sm max-w-sm bg-white text-slate-700 rounded-lg shadow
+                  ${
+                    message.to_user_id !== user._id
+                      ? "rounded-tl-none"
+                      : "rounded-tr-none"
+                  }`}
+                >
+                  {message.message_type === "image" && (
+                    <img
+                      src={message.media_url}
+                      className="w-full max-w-sm rounded-lg mb-1"
+                      alt=""
+                    />
+                  )}
+                  {message.text && <p>{message.text}</p>}
+                </div>
+              </div>
+            ))}
+
+          <div ref={messagesEndRef} />
+        </div>
+
+        {/* Input bar */}
+        <div className="px-4 mt-4">
+          <div className="flex items-center gap-3 pl-5 p-1.5 bg-white w-full max-w-xl mx-auto border border-gray-200 shadow rounded-full mb-5">
+            <input
+              type="text"
+              className="flex-1 outline-none text-slate-700"
+              placeholder="Type a message..."
+              onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+              onChange={(e) => setText(e.target.value)}
+              value={text}
+            />
+
+            <label htmlFor="image" className="cursor-pointer">
+              {image ? (
+                <img
+                  className="h-8 w-8 rounded object-cover"
+                  src={URL.createObjectURL(image)}
+                  alt="preview"
+                />
+              ) : (
+                <ImageIcon className="size-7 text-gray-400" />
+              )}
+              <input
+                type="file"
+                id="image"
+                accept="image/*"
+                hidden
+                onChange={(e) => {
+                  if (e.target.files && e.target.files[0]) {
+                    setImage(e.target.files[0]);
+                  }
+                }}
+              />
+            </label>
+
+            <button
+              onClick={sendMessage}
+              className="bg-gradient-to-br from-indigo-500 to-purple-600
+              hover:from-indigo-700 hover:to-purple-800 active:scale-95
+              cursor-pointer text-white p-2 rounded-full"
+            >
+              <SendHorizontal size={18} />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Chat;

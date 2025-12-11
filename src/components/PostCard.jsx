@@ -10,13 +10,11 @@ import {
 import { useNavigate } from "react-router-dom";
 
 const PostCard = ({ post }) => {
-  // معالجة الهاشتاغات
   const postWithHashtags = post.content.replace(
     /(#[\w]+)/g,
     '<span class="text-indigo-600">$1</span>'
   );
 
-  // likes لازم يكون array وليس رقم
   const [likes, setLikes] = useState(post.likes || []);
   const currentUser = dummyUserData;
 

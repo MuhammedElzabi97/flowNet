@@ -19,7 +19,6 @@ const Connections = () => {
     { label: "Connections", value: connections, icon: Users },
   ];
 
-  // 👈 نجيب بيانات التاب الحالي بشكل آمن
   const currentTabData =
     dataArray.find((item) => item.label === currentTab) ?? dataArray[0];
 
@@ -35,7 +34,6 @@ const Connections = () => {
           </p>
         </div>
 
-        {/* الكروت العلوية */}
         
       <div className="flex justify-center w-full mt-4">
         <div className="mb-8 flex flex-wrap gap-6">
@@ -52,7 +50,6 @@ const Connections = () => {
           ))}
         </div>
       </div>
-        {/* أزرار التابات */}
         <div className="flex justify-center w-full mt-4">
         <div className="inline-flex flex-wrap items-center border border-white rounded-md bg-gray-100 shadow-sm  gap-8">
           {dataArray.map((tab) => (
@@ -68,7 +65,6 @@ const Connections = () => {
             >
               <tab.icon className="w-4 h-4" />
               <span className="ml-1">{tab.label}</span>
-              {/* لو حاب تستخدم count حقيقي، ضيفه في dataArray */}
               {tab.count !== undefined && (
                 <span className="ml-2 text-xs bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">
                   {tab.count}
@@ -78,12 +74,11 @@ const Connections = () => {
           ))}
         </div>
       </div>
-        {/* قائمة المستخدمين */}
         <div className="flex flex-wrap gap-6 mt-6">
           {currentTabData.value.map((user) => (
             <div
               key={user._id}
-              className="w-full max-w-88 flex gap-5 p-6 bg-white shadow rounded-full"
+              className="w-full max-w-88 flex gap-5 p-6 bg-white shadow rounded-lg"
             >
               <img
                 src={user.profile_picture}

@@ -7,7 +7,6 @@ const Login = () => {
   return (
     <div className="relative min-h-screen flex flex-col md:flex-row ">
 
-      {/* صورة الخلفية */}
       <img
         src={assets.bgImage}
         alt=""
@@ -15,7 +14,6 @@ const Login = () => {
 
       />
 
-      {/* العمود اليسار: اللوغو + التقييم + العنوان + الوصف */}
       <div className="flex-1 flex flex-col items-start justify-between lg:pl-40 p-6 md:p-10 z">
         {/* اللوغو */}
         <motion.img
@@ -72,7 +70,6 @@ const Login = () => {
           and turn conversations into lasting connections.
         </motion.p>
       </div>
-      {/* العمود اليمين: كرت تسجيل الدخول من Clerk */}
      <div className="flex-1 flex items-center justify-center p-6 md:p-10 z-10">
   <motion.div
     className="w-full max-w-md p-8 rounded-3xl

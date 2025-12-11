@@ -10,20 +10,17 @@ const Layout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
 
-  // المسارات اللي ما بدنا نعرض فيها السايد بار
   const hideSidebar = location.pathname === "/login"; // أو "/sign-in" حسب مسارك
 
   if (!user) return <Loading />;
 
   return (
     <div className="w-full flex h-screen">
-      {/* السايد بار يظهر فقط إذا ما كنا بصفحة اللوج إن */}
       {!hideSidebar && (
         <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
       )}
 
       <div className="flex-1 relative">
-        {/* زرار الـ Menu / X للموبايل - برضه بس لما السايد بار مفعل */}
         {!hideSidebar && (
           <>
             {sidebarOpen ? (

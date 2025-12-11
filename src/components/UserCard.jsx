@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React from "react";
 import { dummyUserData } from "../assets/assets";
 import { MapPin, MessageCircle, Plus, UserPlus } from "lucide-react";
@@ -6,23 +5,19 @@ import { MapPin, MessageCircle, Plus, UserPlus } from "lucide-react";
 const UserCard = ({ user }) => {
   const currentUser = dummyUserData;
 
-  // هل المستخدم الحالي يتابع هذا الشخص؟
   const isFollowing = currentUser?.following?.includes(user._id);
 
   const handleFollow = async () => {
-    // هون بعدين بتحط منطق الـ API أو التحديث
     console.log("Follow clicked for:", user._id);
   };
 
   const handleConnectionRequest = async () => {
-    // مستقبلًا لو بدك زر Connection
   };
 
   return (
     <div
       className="p-4 pt-6 flex flex-col justify-between border border-green-200 rounded-md mx-auto max-w-xs bg-white shadow-sm"
     >
-      {/* الصورة والاسم والبايو */}
       <div className="text-center">
         <img
           src={user.profile_picture}
@@ -46,7 +41,6 @@ const UserCard = ({ user }) => {
         )}
       </div>
 
-      {/* الموقع وعدد المتابعين */}
       <div className="flex items-center justify-center gap-2 mt-4 text-xs text-gray-600">
         {user.location && (
           <div className="flex items-center gap-1 border border-gray-300 rounded-full px-3 py-1">
@@ -61,7 +55,6 @@ const UserCard = ({ user }) => {
         </div>
       </div>
 
-      {/* زر المتابعة */}
       <div className="flex mt-4 gap-2">
         <button
           onClick={handleFollow}

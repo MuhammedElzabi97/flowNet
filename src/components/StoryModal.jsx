@@ -36,11 +36,9 @@ const StoryModal = ({ setShowModal, fetchStories, onCreateStory }) => {
   };
 
   const handleCreateStory = async () => {
-    // validation بسيطة
     if (mode === "text" && !text.trim()) return;
     if (mode === "media" && !previewUrl) return;
 
-    // نكوّن ستوري جديدة (محلياً)
     const baseUser = dummyStoriesData[0]?.user;
 
     const newStory = {
@@ -61,8 +59,6 @@ const StoryModal = ({ setShowModal, fetchStories, onCreateStory }) => {
       onCreateStory(newStory); // نضيفها للستيت في StoriesBar
     }
 
-    // لاحقاً مع API ممكن ترجع تفعل fetchStories هنا
-    // if (typeof fetchStories === "function") await fetchStories();
 
     resetState();
     setShowModal(false);
@@ -119,7 +115,6 @@ const StoryModal = ({ setShowModal, fetchStories, onCreateStory }) => {
           )}
         </div>
 
-        {/* ألوان الخلفية */}
         <div className="flex gap-2 mt-3 justify-center">
           {bgColors.map((color) => (
             <button
@@ -134,7 +129,6 @@ const StoryModal = ({ setShowModal, fetchStories, onCreateStory }) => {
           ))}
         </div>
 
-        {/* Text / Upload buttons */}
         <div className="flex gap-2 mt-4">
           <button
             onClick={() => {
@@ -166,7 +160,6 @@ const StoryModal = ({ setShowModal, fetchStories, onCreateStory }) => {
           </label>
         </div>
 
-        {/* زر النشر */}
         <button
           onClick={handleCreateStory}
           className="w-full mt-4 bg-indigo-600 hover:bg-indigo-500 transition-all p-2 rounded-lg font-semibold text-white"
